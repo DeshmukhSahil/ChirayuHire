@@ -1,0 +1,8 @@
+{
+  "name": "HireFlow AI - Enterprise ATS & Recruitment Platform",
+  "description": "Next-generation AI-powered Applicant Tracking System with resume parsing, automated candidate scoring, AI-led interviews, and collaborative recruitment workflows.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

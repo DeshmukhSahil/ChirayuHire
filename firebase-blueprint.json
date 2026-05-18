@@ -1,0 +1,102 @@
+{
+  "entities": {
+    "Organization": {
+      "title": "Organization",
+      "description": "Company or enterprise using the ATS",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "logoUrl": { "type": "string" },
+        "industry": { "type": "string" },
+        "subscriptionPlan": { "type": "string", "enum": ["free", "pro", "enterprise"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "subscriptionPlan"]
+    },
+    "User": {
+      "title": "User",
+      "description": "System user (Admin, Recruiter, or Candidate)",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "role": { "type": "string", "enum": ["super-admin", "recruiter", "candidate"] },
+        "orgId": { "type": "string" },
+        "photoURL": { "type": "string" }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "Job": {
+      "title": "Job",
+      "description": "Job posting created by a recruiter",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "orgId": { "type": "string" },
+        "status": { "type": "string", "enum": ["draft", "open", "closed"] },
+        "department": { "type": "string" },
+        "location": { "type": "string" },
+        "salaryRange": { "type": "string" },
+        "createdBy": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "orgId", "status", "createdBy"]
+    },
+    "Application": {
+      "title": "Application",
+      "description": "Link between a candidate and a job",
+      "type": "object",
+      "properties": {
+        "jobId": { "type": "string" },
+        "candidateId": { "type": "string" },
+        "status": { "type": "string", "enum": ["applied", "screening", "interview", "technical", "hr", "selected", "rejected", "hired"] },
+        "stage": { "type": "string" },
+        "aiScore": { "type": "number" },
+        "aiSummary": { "type": "string" },
+        "notes": { "type": "string" },
+        "appliedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["jobId", "candidateId", "status", "appliedAt"]
+    },
+    "CandidateProfile": {
+      "title": "CandidateProfile",
+      "description": "Full details of a candidate's resume and links",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "resumeUrl": { "type": "string" },
+        "resumeText": { "type": "string" },
+        "skills": { "type": "array", "items": { "type": "string" } },
+        "experience": { "type": "array" },
+        "education": { "type": "array" },
+        "links": { "type": "object" },
+        "aiAnalysis": { "type": "object" }
+      },
+      "required": ["userId"]
+    }
+  },
+  "firestore": {
+    "/organizations/{orgId}": {
+      "schema": "Organization",
+      "description": "Root organization data"
+    },
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles"
+    },
+    "/jobs/{jobId}": {
+      "schema": "Job",
+      "description": "Job postings"
+    },
+    "/applications/{applicationId}": {
+      "schema": "Application",
+      "description": "Job applications"
+    },
+    "/candidateProfiles/{profileId}": {
+      "schema": "CandidateProfile",
+      "description": "Full candidate dossiers"
+    }
+  }
+}
